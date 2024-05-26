@@ -30,7 +30,27 @@ public class BookController {
     private PythonRecommendationClient pythonRecommendationClient;
 
     @PostMapping("/recommend")
-    public ResponseEntity<?> getRecommendedBooks(@RequestBody RecommendationRequest request) {
+    public ResponseEntity<?> getRecommendedBooksPost(@RequestBody RecommendationRequest request) {
+        return getRecommendedBooks(request);
+    }
+
+    @GetMapping("/recommend")
+    public ResponseEntity<?> getRecommendedBooksGet(
+            @RequestParam String gender,
+            @RequestParam int patronType,
+            @RequestParam int birthdate,
+            @RequestParam String department) {
+
+        RecommendationRequest request = new RecommendationRequest();
+        request.setGender(gender);
+        request.setPatronType(patronType);
+        request.setBirthdate(birthdate);
+        request.setDepartment(department);
+
+        return getRecommendedBooks(request);
+    }
+
+    private ResponseEntity<?> getRecommendedBooks(RecommendationRequest request) {
         try {
             logger.info("Received request: {}", request);
 
