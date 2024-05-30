@@ -17,6 +17,7 @@ public class Book {
     private String isbn;
     private String isbn13;
     private String description;
+    private String categoryName;
     private String imgPath;
 
     // Getters and Setters
@@ -90,6 +91,14 @@ public class Book {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getCategoryName() {
+        return categoryName;
+    }
+
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
     }
 
     public String getImgPath() {
