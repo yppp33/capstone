@@ -37,13 +37,16 @@ public class BookController {
     @GetMapping("/recommend")
     public ResponseEntity<?> getRecommendedBooksGet(
             @RequestParam String gender,
-            @RequestParam int patronType,
+            @RequestParam int patron_type,
             @RequestParam int birthdate,
             @RequestParam String department) {
 
+        logger.info("GET request received with params - gender: {}, patron_type: {}, birthdate: {}, department: {}", gender, patron_type, birthdate, department);
+
+
         RecommendationRequest request = new RecommendationRequest();
         request.setGender(gender);
-        request.setPatronType(patronType);
+        request.setPatronType(patron_type);
         request.setBirthdate(birthdate);
         request.setDepartment(department);
 

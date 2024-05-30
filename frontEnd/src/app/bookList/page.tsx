@@ -1,3 +1,4 @@
+//  bookList/page.tsx
 "use client";
 
 import { useSearchParams } from "next/navigation";
@@ -10,10 +11,12 @@ import { serverBookToData } from "@components/model/interfaceModel";
 import { useDummy } from "@data/const";
 import { dummyData } from "@data/dummyData";
 
-const dummyApiUrl = `https://bc87b101-4a86-4419-a9e4-2648ec0bde58.mock.pstmn.io/getBookInfo`;
+// const dummyApiUrl = `https://bc87b101-4a86-4419-a9e4-2648ec0bde58.mock.pstmn.io/getBookInfo`;
+const localApiUrl = `http://localhost:8080/books/recommend`;
+
 // const apiURL = "https://www.aladin.co.kr/ttb/api";
 const local = `http://localhost:3000/bookList`;
-const requestBaseUrl = dummyApiUrl;
+const requestBaseUrl = localApiUrl;
 
 const BookList = () => {
   const pathname = usePathname();
@@ -25,7 +28,23 @@ const BookList = () => {
    * 처음 렌더링될때 한번만 API 호출를 호출한다.
    */
   useEffect(() => {
-    const params = decodeURI(`${searchParams}`);
+    const gender = searchParams.get("gender") || "defaultGender";
+    const patronType = searchParams.get("patron_type") || "0";  // patron_type 기본값 "0"
+    const birthdate = searchParams.get("birthdate") || "defaultBirthdate";
+    const department = searchParams.get("department") || "defaultDepartment";
+
+    // 로그를 추가하여 매개변수 값 확인
+    console.log("gender:", gender);
+    console.log("patron_type:", patronType);
+    console.log("birthdate:", birthdate);
+    console.log("department:", department);
+
+    const params = new URLSearchParams({
+      gender,
+      patron_type: patronType,
+      birthdate,
+      department,
+    });
 
     if (useDummy) {
       const bookData = dummyData;
@@ -34,30 +53,33 @@ const BookList = () => {
       return;
     }
 
-    fetch(requestBaseUrl + "?" + params)
-      .then((response) => {
-        return response.json(); // JSON 데이터를 반환하는 프로미스
-      })
-      .then((bookData: serverBook[]) => {
-        console.log(bookData); // JSON 데이터를 로깅
-        const convertedDataList: Data[] = serverBookToData(bookData);
-        setData(convertedDataList);
-      })
-      .catch((error) => {
-        console.log("들어오는 데이터 형식 맞지 않음");
-        console.log("서버 출력 데이터 수정 필요");
-        console.log(error);
-      });
-  }, []);
+    fetch(`${requestBaseUrl}?${params.toString()}`)  // 수정된 부분
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+          return response.json();
+        })
+        .then((bookData: serverBook[]) => {
+          console.log(bookData); // JSON 데이터를 로깅
+          const convertedDataList: Data[] = serverBookToData(bookData);
+          setData(convertedDataList);
+        })
+        .catch((error) => {
+          console.log("들어오는 데이터 형식 맞지 않음");
+          console.log("서버 출력 데이터 수정 필요");
+          console.log(error);
+        });
+  }, [searchParams]);
 
   return (
-    <div>
-      {datalist[0] ? (
-        <BookListTamplate dataList={datalist} />
-      ) : (
-        <LoadingComponent />
-      )}
-    </div>
+      <div>
+        {datalist[0] ? (
+            <BookListTamplate dataList={datalist} />
+        ) : (
+            <LoadingComponent />
+        )}
+      </div>
   );
 };
 
