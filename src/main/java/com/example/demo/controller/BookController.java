@@ -16,6 +16,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/books")
+@CrossOrigin(origins = "http://localhost:3030")
 public class BookController {
 
     private static final Logger logger = LoggerFactory.getLogger(BookController.class);
@@ -96,5 +97,15 @@ public class BookController {
         List<Long> testIds = Arrays.asList(1L, 29L, 2597L); // Change to actual existing book IDs
         List<Book> books = bookRepository.findAllById(testIds);
         return ResponseEntity.ok(books);
+    }
+
+    @GetMapping("/similarBooks")
+    public ResponseEntity<?> getSimilarBooks(@RequestParam Long id) {
+        List<Book> similarBooks = bookService.getSimilarBooks(id);
+        if (!similarBooks.isEmpty()) {
+            return ResponseEntity.ok(similarBooks);
+        } else {
+            return ResponseEntity.status(404).body("No similar books found");
+        }
     }
 }
