@@ -1,8 +1,10 @@
 package com.example.demo.model;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 @Entity
 @Table(name = "BOOKS")
@@ -13,11 +15,13 @@ public class Book {
     private String author;
     private String publisher;
     private String publishYear;
+    @Column(name = "class_no")
     private String classCode;
     private String isbn;
     private String isbn13;
     private String description;
     private String categoryName;
+    @Column(name = "img")
     private String imgPath;
 
     // Getters and Setters
