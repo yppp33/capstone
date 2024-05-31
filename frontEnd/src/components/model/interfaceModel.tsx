@@ -74,6 +74,9 @@ export function serverBookToData(severBookList: serverBook[]): Data[] {
     if (elem.description === null) {
       elem.description = "";
     }
+    if (elem.categoryName === null) {
+      elem.categoryName = "";
+    }
 
     const bookItem: BookItem = {
       id: elem.id,
@@ -85,7 +88,7 @@ export function serverBookToData(severBookList: serverBook[]): Data[] {
       isbn: elem.isbn,
       isbn13: elem.isbn13,
       description: elem.description,
-      categoryName: "",
+      categoryName: elem.categoryName,
       subInfo: undefined,
       cover: elem.imgPath,
     };
@@ -110,6 +113,7 @@ export interface serverBook {
   isbn13: string | null;
   description: string | null;
   imgPath: string;
+  categoryName: string | null;
 }
 
 export interface inputData {

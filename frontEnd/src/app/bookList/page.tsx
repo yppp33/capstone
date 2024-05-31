@@ -37,6 +37,13 @@ const BookList = () => {
     console.log(finalUrl);
     fetch(finalUrl)
       .then((response) => {
+        if (!response.ok) {
+          alert("네트워크 에러");
+          return [];
+        }
+        const json = response.json();
+        console.log("api로 들어온 res json으로 변환");
+        console.log(`${json}`);
         return response.json(); // JSON 데이터를 반환하는 프로미스
       })
       .then((bookData: serverBook[]) => {
@@ -45,8 +52,7 @@ const BookList = () => {
         setData(convertedDataList);
       })
       .catch((error) => {
-        console.log("들어오는 데이터 형식 맞지 않음");
-        console.log("서버 출력 데이터 수정 필요");
+        console.log("인터페이스 변환 실패, json로그와 함께 카톡주세요");
         console.log(error);
       });
   }, []);

@@ -39,10 +39,13 @@ export default function AboutBook({
       }
       fetch(Api2Url + "?" + `id=${bookId}`)
         .then((res) => {
+          if (!res.ok) {
+            // 서버쪽에 404로 주는 case가 있어 예외처리 (front에서는 빈 리스트로 간주함)
+            return [];
+          }
           return res.json();
         })
-        .then((res) => {
-          const serverBookList: serverBook[] = res;
+        .then((serverBookList: serverBook[]) => {
           const dataList = serverBookToData(serverBookList);
           return returnBookList(dataList);
         })
