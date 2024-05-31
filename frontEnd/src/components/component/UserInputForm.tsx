@@ -1,5 +1,3 @@
-//UserInputForm.tsx
-
 import React, { useState, useEffect } from "react";
 import GenderForm from "@components/containers/formItems/GenderForm";
 import PatronTypeSelector from "@components/containers/formItems/EducationSelector";
