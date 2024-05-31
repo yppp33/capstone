@@ -33,12 +33,19 @@ export default function AboutBook({
       setRecommandBookList(bookItemLsit);
       // console.log("새로 호출ㄴ");
     } else {
-      fetch(Api2Url)
+      let bookId = bookData.id;
+      if (bookId === null) {
+        bookId = 0;
+      }
+      fetch(Api2Url + "?" + `id=${bookId}`)
         .then((res) => {
+          if (!res.ok) {
+            // 서버쪽에 404로 주는 case가 있어 예외처리 (front에서는 빈 리스트로 간주함)
+            return [];
+          }
           return res.json();
         })
-        .then((res) => {
-          const serverBookList: serverBook[] = res;
+        .then((serverBookList: serverBook[]) => {
           const dataList = serverBookToData(serverBookList);
           return returnBookList(dataList);
         })
