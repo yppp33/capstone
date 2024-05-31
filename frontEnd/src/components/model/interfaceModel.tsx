@@ -68,15 +68,8 @@ export function isEmptyObj(obj: Object | null) {
 
 export function serverBookToData(severBookList: serverBook[]): Data[] {
   const datalist: Data[] = severBookList.map((elem) => {
-    if (elem.isbn13 === null) {
-      elem.isbn13 = "";
-    }
-    if (elem.description === null) {
-      elem.description = "";
-    }
-    if (elem.categoryName === null) {
-      elem.categoryName = "";
-    }
+    const imageName = elem.imgPath ? elem.imgPath : "/noImage.png";
+    const makedPath = "public/images/" + imageName.split("/").reverse()[0];
 
     const bookItem: BookItem = {
       id: elem.id ? elem.id : 0,
@@ -86,11 +79,11 @@ export function serverBookToData(severBookList: serverBook[]): Data[] {
       publish_year: elem.publishYear ? parseInt(elem.publishYear) : 0,
       class: elem.classCode ? parseInt(elem.classCode) : 0,
       isbn: elem.isbn ? elem.isbn : "",
-      isbn13: elem.isbn13,
-      description: elem.description,
-      categoryName: elem.categoryName,
+      isbn13: elem.isbn13 ? elem.isbn13 : "",
+      description: elem.description ? elem.description : "",
+      categoryName: elem.categoryName ? elem.categoryName : "",
       subInfo: undefined,
-      cover: elem.imgPath ? elem.imgPath : "public/images/noImage.png",
+      cover: makedPath,
     };
 
     const result: Data = {
