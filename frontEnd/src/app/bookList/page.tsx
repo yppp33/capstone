@@ -43,8 +43,8 @@ const BookList = () => {
         }
         const json = response.json();
         console.log("api로 들어온 res json으로 변환");
-        console.log(`${json}`);
-        return response.json(); // JSON 데이터를 반환하는 프로미스
+        // console.log(`${json}`);
+        return json; // JSON 데이터를 반환하는 프로미스
       })
       .then((bookData: serverBook[]) => {
         console.log(bookData); // JSON 데이터를 로깅

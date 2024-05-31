@@ -79,18 +79,18 @@ export function serverBookToData(severBookList: serverBook[]): Data[] {
     }
 
     const bookItem: BookItem = {
-      id: elem.id,
-      title: elem.title,
-      author: elem.author,
-      publisher: elem.publisher,
-      publish_year: parseInt(elem.publishYear),
-      class: parseInt(elem.classCode),
-      isbn: elem.isbn,
+      id: elem.id ? elem.id : 0,
+      title: elem.title ? elem.title : "",
+      author: elem.author ? elem.author : "",
+      publisher: elem.publisher ? elem.publisher : "",
+      publish_year: elem.publishYear ? parseInt(elem.publishYear) : 0,
+      class: elem.classCode ? parseInt(elem.classCode) : 0,
+      isbn: elem.isbn ? elem.isbn : "",
       isbn13: elem.isbn13,
       description: elem.description,
       categoryName: elem.categoryName,
       subInfo: undefined,
-      cover: elem.imgPath,
+      cover: elem.imgPath ? elem.imgPath : "public/images/noImage.png",
     };
 
     const result: Data = {
@@ -103,16 +103,16 @@ export function serverBookToData(severBookList: serverBook[]): Data[] {
 }
 
 export interface serverBook {
-  id: number;
-  title: string;
-  author: string;
-  publisher: string;
-  publishYear: string;
-  classCode: string;
-  isbn: string;
+  id: number | null;
+  title: string | null;
+  author: string | null;
+  publisher: string | null;
+  publishYear: string | null;
+  classCode: string | null;
+  isbn: string | null;
   isbn13: string | null;
   description: string | null;
-  imgPath: string;
+  imgPath: string | null;
   categoryName: string | null;
 }
 
