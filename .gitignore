@@ -93,3 +93,9 @@ thumb
 sketch
 
 # End of https://www.toptal.com/developers/gitignore/api/nextjs,react
+frontEnd/.next/cache/webpack/client-development/0.pack.gz
+*.old
+
+*.gz
+*.json
+frontEnd/.next
