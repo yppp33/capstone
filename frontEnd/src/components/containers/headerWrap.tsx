@@ -47,7 +47,14 @@ export default function HeaderWrap({
       >
         {children}
       </div>
-      <footer className="footer">Footer</footer>
+      <footer className="footer">
+        <a href="https://github.com/yppp33/capstone" target="_blank">
+          Github
+        </a>
+        <p>
+          <span>Copyright 2024.</span>
+        </p>
+      </footer>
     </div>
   );
 }

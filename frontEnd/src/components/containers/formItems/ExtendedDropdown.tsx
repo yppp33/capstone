@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { initYear } from "@data/const";
+import { checkformData } from "@components/model/interfaceModel";
 
 interface itemProps {
   onChange: (value: number) => void;
@@ -21,74 +22,98 @@ const yearsArray = Array.from({ length: endYear - startYear + 1 }, (_, index) =>
   (startYear + index).toString()
 );
 
-export default function ExtendedDropdown({ onChange }: itemProps) {
+export default function ExtendedDropdown({
+  onChange,
+  checkComponent,
+}: {
+  onChange: (value: number) => void;
+  checkComponent: checkformData;
+}) {
   const [inputValue, setInputValue] = useState<string>(initYear);
   const [matchedItems, setMatchedItems] = useState<string[]>([]);
-  const [check, setCheck] = useState<boolean>(false);
+  const [check, setCheck] = useState<boolean>(true);
   const [alertSetence, setAlertSentence] = useState("");
 
-  // 맞는 조건일때 afterEnter 사용
-  const afterEnter = (selecteditem: string) => {
-    setInputValue(selecteditem);
-    setMatchedItems([]);
+  const { birthdateCheck } = checkComponent;
 
+  useEffect(() => {
+    setCheck(birthdateCheck);
+    console.log("부모컴포넌트에서의 전달값이 변경");
+    alertSetence === "" ? setAlertSentence("연도를 다시 확인해주세요!") : "";
+  }, [birthdateCheck]);
+
+  // 부모컴포넌트에서 전달하는 bool값에 변화가 생길때마다 check값을 바꾸낟.
+
+  /**
+   *  부모 컴포넌트( 폼 컴포넌트)에 값을 전달해 객체의 값을 변경한다.
+   *
+   * @param selecteditem inputvalue,  input값에 렌더링될 값이다.
+   */
+  const submitValueToParentComponent = (selecteditem: string) => {
+    // setInputValue(selecteditem);
+    // setMatchedItems([]);
     const yearItem = parseInt(selecteditem);
     onChange(yearItem);
   };
 
+  /**
+   * input값이 렌더링될때마다 호출되는 함수이다.
+   * 1. 올바른 조건인지 체크해 check의 값을 바꾼다.
+   * 2. yearsArray에 있는 값이라면, 검색어 목록에 후보 값을 띄운다.
+   * @param e
+   * @returns
+   */
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setInputValue(value);
+    // 렌더링 되는 값 변경
 
+    // inputValue 비동기적으로 검사하기 때문에 e.target.value로 진행
+
+    // checkRightInputValue(value);
+
+    //후보 list 세팅
     const nowYearsArray = yearsArray.filter((year) => year.includes(value));
     setMatchedItems(nowYearsArray);
 
-    // 자동완성 눌렀을시  항목 안에 존재한다면
+    // 입력한 값이 후보 list 항목 안에 존재한다면
     if (matchedItems.includes(value)) {
-      afterEnter(value);
       setCheck(true);
-      return;
+    } else {
+      setCheck(false);
     }
 
-    // 항목 안에 존재하지 않는다면
-    // if (!yearsArray.includes(inputValue)) {
-    //   setAlertSentence("연도를 다시 확인해주세요");
-    // }
-    setCheck(false);
+    submitValueToParentComponent(value);
+    // 부모 컴포넌트에서 한번 더 체크하기 위해 값은 변경해야한다.
   };
 
-  /** 클릭했을때 일어나는 이벤트이다. */
+  /** 후보값들 중 값을 클릭했을때 . */
   const handleitemClick = (item: string) => {
-    afterEnter(item);
+    setInputValue(item);
+    // 자동완성
+    setCheck(true);
+    setMatchedItems([]);
+    submitValueToParentComponent(item);
   };
 
-  /**폼 제출시, 엔터시 실행되는 함수이다. */
-  const autoCompletion = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    // if (matchedItems.length == 1) {
-    //   let item = matchedItems[0];
-    //   setCheck(true);
-    //   afterEnter(item);
-    //   return;
-    // }
+  /**
+   * 사용자가 입력하고 있는 값을 체크한다.
+   * 만약 옳지 않은 값이라면 check 변수를 통해
+   * alertSetence를 공지한다 . */
+  const checkRightInputValue = (inputValue: string) => {
     if (yearsArray.includes(inputValue)) {
       setCheck(true);
-      afterEnter(inputValue);
-    }
-
-    /**
-     * 배열에 없는 연도를 작성했을시
-     */
-    if (!yearsArray.includes(inputValue)) {
-      setAlertSentence("연도를 다시 확인해주세요");
+    } else {
+      setCheck(false);
     }
   };
 
   return (
     <div className="item-component">
       <form
-        onSubmit={(e: React.FormEvent<HTMLFormElement>) => autoCompletion(e)}
+        onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
+          e.preventDefault();
+        }}
         className="form-floating"
       >
         <input

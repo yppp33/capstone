@@ -116,6 +116,10 @@ export interface serverBook {
   categoryName: string | null;
 }
 
+export interface checkformData {
+  birthdateCheck: boolean;
+  departmentCheck: boolean;
+}
 export interface inputData {
   gender: string;
   patron_type: number;

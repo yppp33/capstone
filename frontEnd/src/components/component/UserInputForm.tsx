@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import GenderForm from "@components/containers/formItems/GenderForm";
 import PatronTypeSelector from "@components/containers/formItems/EducationSelector";
-import BirthdateForm from "@components/containers/formItems/BirthdateForm";
 import Department from "@components/containers/formItems/Department";
 import { useRouter } from "next/navigation";
 import { inputData } from "@components/model/interfaceModel";
@@ -12,6 +11,7 @@ import {
 import { initYear } from "@data/const";
 
 import ExtendedDropdown from "@components/containers/formItems/ExtendedDropdown";
+import { checkformData } from "@components/model/interfaceModel";
 
 const INIT_YEAR = parseInt(initYear);
 const EMPTY_STRING = "";
@@ -57,7 +57,6 @@ function setInputForm(key: keyof typeof testDataObj) {
 }
 
 const bookList = "/bookList";
-const getBookInfo = "/getBookInfo";
 const routeUrl = bookList;
 
 const UserInputForm = () => {
@@ -68,6 +67,13 @@ const UserInputForm = () => {
   );
 
   const router = useRouter();
+
+  const [checkComponent, setCheckComponent] = useState<checkformData>({
+    birthdateCheck: true,
+    departmentCheck: true,
+  });
+
+  // 객체 프로퍼티를 2개를 만들어 그 값을 변경한다..!
 
   /**
    *
@@ -100,6 +106,16 @@ const UserInputForm = () => {
       );
     };
 
+    const submitcheckValueToChildComponent = (
+      fieldName: string,
+      value: boolean
+    ) => {
+      setCheckComponent((prevData: checkformData) => ({
+        ...prevData,
+        [fieldName]: value,
+      }));
+    };
+
     if (isFormComplete && checkAlltheInput(formData)) {
       // 전부 작성했다면 bookList 경로 이동 쿼리문과 함께
       const queryString = returnQueryString(formData);
@@ -107,9 +123,15 @@ const UserInputForm = () => {
       return;
     }
 
-    console.log(formData);
+    if (!(startYear <= formData.birthdate && formData.birthdate <= endYear)) {
+      submitcheckValueToChildComponent("birthdateCheck", false);
+    }
+    if (formData.department === EMPTY_STRING) {
+      // console.log("소속을 다시 확인해주세요.");
+      submitcheckValueToChildComponent("departmentCheck", false);
+      // alert("소속을 다시 확인해주세요.");
+    }
     // 작성되지 않은 항목이 있을때
-    alert("작성되지 않은 항목이 있습니다.");
   };
 
   const handleInputChange = (fieldName: string, value: string | number) => {
@@ -128,6 +150,7 @@ const UserInputForm = () => {
 
       <ExtendedDropdown
         onChange={(value) => handleInputChange("birthdate", value)}
+        checkComponent={checkComponent}
       />
 
       <Department
@@ -137,10 +160,7 @@ const UserInputForm = () => {
       <button
         type="button"
         className="btn btn-primary"
-        onClick={() => {
-          checkSubmitCondition();
-          // input란 체크 후 이동
-        }}
+        onClick={checkSubmitCondition}
       >
         제출
       </button>
