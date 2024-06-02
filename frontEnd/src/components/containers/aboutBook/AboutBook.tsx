@@ -61,9 +61,6 @@ export default function AboutBook({
   // const testDataList = returnBookList(dummyRecommandDataList);
   const [recommandBookList, setRecommandBookList] = useState<BookItem[]>();
 
-  // 현재 dummyData id 없어서 isbn으로 대체해 진행
-  const [id, setId] = useState();
-
   /**
    * 모델 2로 API 호출
    */
@@ -80,7 +77,6 @@ export default function AboutBook({
   // AboutBook 컴포넌트 모든 내용 수정
 
   return (
-    // <div className="about_book">
     <div>
       {/*학교 데이터에서 제공되는 정보만 정렬함 */}
       <BookBasicInfo bookData={bookData} />

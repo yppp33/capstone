@@ -23,7 +23,7 @@
   margin-top: 10px;
   font-size: 16px;
   color: #333;
-  max-width: 100%;
+  /* max-width: 100%; */
 }
 
 .book_item:hover {
@@ -75,36 +75,8 @@
   }
 }
 
-@media (max-width: 700px) {
+@media (max-width: 500px) {
   .show_book_list {
     grid-template-columns: repeat(2, 1fr);
   }
 }
-
-/* 캐러셀 미구현  */
-/* .book_board {
-  position: relative;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  width: 100%;
-}
-
-.book_board img {
-  position: relative;
-  display: flex;
-  flex-direction: row;
-  width: 30px;
-  margin: 10px;
-
-  align-items: center;
-} */
-
-/* .book_skill_slide {
-  position: relative;
-  display: flex;
-  justify-content: space-between;
-  height: 100%;
-  width: 100%;
-  border: solid rgb(143, 186, 243) 10px;
-} */

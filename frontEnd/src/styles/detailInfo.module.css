@@ -4,7 +4,6 @@
 .book_list_container {
   overflow-x: auto;
   overflow-y: hidden;
-  white-space: nowrap;
   padding: 20px;
   margin: 20px auto;
   max-width: 90%;
