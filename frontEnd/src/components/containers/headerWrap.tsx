@@ -25,17 +25,17 @@ export default function HeaderWrap({
     <div className="header_wrapper">
       <nav className={`header`} style={{ height: HEADER_HEIGHT }}>
         <div className="d-flex text-white flex-row justify-content-between">
-          <Link className="p-3 navbar-brand" href={"/"}>
-            HOME
+          <Link className="p-3 navbar-brand" href="#">
+            독서하냥
           </Link>
-          {/* <ul className="ms-auto">
-            <Link onClick={onClick} className="p-3 nav-link" href="/loginPage">
+          <ul className="ms-auto">
+            {/* <Link onClick={onClick} className="p-3 nav-link" href="/loginPage">
               Login
+            </Link> */}
+            <Link className=" p-3 pr-3 nav-link" href={"/"}>
+              정보 다시 입력하기
             </Link>
-            <Link className=" p-3 pr-3 nav-link" href="#">
-              Profile
-            </Link>
-          </ul> */}
+          </ul>
         </div>
       </nav>
       <div
