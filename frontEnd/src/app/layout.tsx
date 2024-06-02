@@ -4,14 +4,16 @@ import "@styles/globals.css";
 import HeaderWrap from "@components/containers/headerWrap";
 import "../../node_modules/bootstrap/dist/css/bootstrap.min.css";
 
-import { Suspense } from "react";
-import NavigationEvents from "@components/navigation-events";
+import favicon from "@public/icons/hanyang.svg";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "HYU book",
+  title: "독서하냥",
   description: "한양대 에리카 소속된 사람들에게 책을 추천해주는 사이트입니다.",
+  icons: {
+    icon: favicon.src,
+  },
 };
 
 export default function RootLayout({
@@ -21,7 +23,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body>
         <HeaderWrap>{children}</HeaderWrap>
 
         {/* 네비게이션과 같이 url에 따라 바뀌거나, 고정 */}
