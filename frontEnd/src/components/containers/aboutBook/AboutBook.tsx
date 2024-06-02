@@ -7,7 +7,6 @@ import {
 import { useEffect, useState } from "react";
 import DetailContent from "./DetailContent";
 import { returnBookList } from "@components/model/interfaceModel";
-import { dummyRecommandDataList } from "@data/dummyRecommandData";
 import BookBasicInfo from "../book/BookBasicInfo";
 import { Api2Url, useDummy } from "@data/const";
 import { dummyData } from "@data/dummyData";

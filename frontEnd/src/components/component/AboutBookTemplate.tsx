@@ -16,12 +16,14 @@ export default function AboutBookTemplate({
   return (
     <>
       <AboutBookWrapper>
-        <button
-          type="button"
-          className="btn-close"
-          aria-label="Close"
-          onClick={clickEvent}
-        ></button>
+        <div className="d-flex justify-content-end">
+          <button
+            type="button"
+            className=" btn-close p-4 "
+            aria-label="Close"
+            onClick={clickEvent}
+          ></button>
+        </div>
         {currentBook ? (
           <>
             <AboutBook

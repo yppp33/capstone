@@ -6,10 +6,6 @@ body {
   background-color: rgb(242, 252, 252);
 }
 
-h3 {
-  padding: 20px;
-}
-
 #root,
 #root > div {
   height: 100%;
@@ -52,11 +48,6 @@ main {
 img {
   width: 200px;
   height: 295px;
-}
-
-.test {
-  border-style: solid;
-  border-color: rgb(164, 9, 199);
 }
 
 /* select Form */

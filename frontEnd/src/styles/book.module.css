@@ -1,18 +1,20 @@
 .show_book_list {
+  /* width: 200px; */
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  grid-gap: 40px;
+  grid-gap: 20px;
+  padding-left: 10px;
 }
 
 .book_item {
   margin-right: 20px;
-  /* width: 150px; */
   text-align: center;
   background-color: #ffffff;
-  padding: 10px;
+  padding: 5px;
   border-radius: 10px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease;
+  box-sizing: border-box;
 }
 
 .book_item img {
