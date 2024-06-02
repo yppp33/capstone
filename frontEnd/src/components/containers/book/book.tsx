@@ -3,6 +3,8 @@
 import { BookItem } from "@components/model/interfaceModel";
 import styles from "@styles/book.module.css";
 import { Data } from "@components/model/interfaceModel";
+import { useDummy } from "@data/const";
+import noImage from "@public/images/noImage.png";
 
 /**
  *
@@ -32,7 +34,7 @@ export default function Book({
       }}
     >
       <div id={styles.book_cover}>
-        <img src={cover} alt={titles[0]} />
+        <img src={useDummy ? noImage.src : cover} alt={titles[0]} />
       </div>
 
       <div className="fw-bold" style={{ fontSize: "1.5rem" }}>
