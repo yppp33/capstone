@@ -27,7 +27,10 @@ const DetailInfo = forwardRef(
           <h2 className={styles.detail_title}>{item}</h2>
           {typeof content === "string" ? (
             content !== "" ? (
-              <p className={styles.detail_text}>{content}</p>
+              <p
+                dangerouslySetInnerHTML={{ __html: content }}
+                className={styles.detail_text}
+              ></p>
             ) : (
               <p className={styles.detail_text}>설명이 없습니다.</p>
             )
