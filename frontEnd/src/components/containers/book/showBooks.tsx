@@ -38,26 +38,28 @@ export default function ShowBooks({ dataList }: { dataList: Data[] }) {
   }, [selectedBook]);
 
   return (
-    <div className={styles.book_recommand_list}>
+    <>
       {selectedBook ? (
         <AboutBookTemplate
           selectedBook={selectedBook}
           clickEvent={closeAboutBook}
         />
       ) : (
-        <>
-          <h3>추천합니다!</h3>
-          <div className={styles.show_book_list}>
-            {returnBookList(dataList).map((data, idx) => (
-              <Book
-                key={idx}
-                bookInfo={data}
-                clickEvent={(bookItem: BookItem) => clickBook(bookItem)}
-              />
-            ))}
+        <div className={styles.book_recommand_list}>
+          <h3 className="d-flex p-5 justify-content-center">추천합니다!</h3>
+          <div className={styles.show_book_list_container}>
+            <div className={styles.show_book_list}>
+              {returnBookList(dataList).map((data, idx) => (
+                <Book
+                  key={idx}
+                  bookInfo={data}
+                  clickEvent={(bookItem: BookItem) => clickBook(bookItem)}
+                />
+              ))}
+            </div>
           </div>
-        </>
+        </div>
       )}
-    </div>
+    </>
   );
 }

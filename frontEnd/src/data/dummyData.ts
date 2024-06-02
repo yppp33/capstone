@@ -4,8 +4,7 @@ export const dummyData: serverBook[] = [
   {
     id: 2402656,
     title: "(사경환) 사회조사분석사 +α",
-    author:
-      "Madigan, Michael T, 서유진, dfjlakdjflasdkjfsldjflksjdflksjlkfjslkfdjklsf",
+    author: "Madigan, Michael T,ldjflksjdflksjlkfjslkfdjklsf",
     publisher: "서원각",
     publishYear: "2016",
     classCode: null,
