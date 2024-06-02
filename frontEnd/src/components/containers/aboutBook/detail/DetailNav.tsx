@@ -24,14 +24,15 @@ export default function DetailNav({
 
   useEffect(() => {
     if (navIndex !== null) {
-      scrollRef.current[navIndex]?.scrollIntoView({ behavior: "smooth" });
+      scrollRef.current[navIndex]?.scrollIntoView({
+        behavior: "smooth",
+        block: "center",
+      });
 
       navRef.current.forEach((ref) => {
         if (ref.classList.contains("active")) {
           ref.classList.remove("active");
         }
-
-        console.log(ref);
       });
 
       navRef.current[navIndex].classList.add("active");
@@ -60,7 +61,7 @@ export default function DetailNav({
           //   console.log(navRef.current[idx]);
           //   navRef.current[idx].classList.add("active");
           // }
-          // css repaint 방지
+          // css repaint 방지ㄴ
           // setNavIndex(idx)코드 제거
           // -> 왜냐면  클릭시 useEffect가 다시 일어난다!!
         }

@@ -30,7 +30,6 @@ export default function AboutBook({
       const convertedDataList: Data[] = serverBookToData(bookData);
       const bookItemLsit: BookItem[] = returnBookList(convertedDataList);
       setRecommandBookList(bookItemLsit);
-      // console.log("새로 호출ㄴ");
     } else {
       let bookId = bookData.id;
       if (bookId === null) {
