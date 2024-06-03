@@ -7,7 +7,6 @@ import {
 import { useEffect, useState } from "react";
 import DetailContent from "./DetailContent";
 import { returnBookList } from "@components/model/interfaceModel";
-import { dummyRecommandDataList } from "@data/dummyRecommandData";
 import BookBasicInfo from "../book/BookBasicInfo";
 import { Api2Url, useDummy } from "@data/const";
 import { dummyData } from "@data/dummyData";
@@ -31,7 +30,6 @@ export default function AboutBook({
       const convertedDataList: Data[] = serverBookToData(bookData);
       const bookItemLsit: BookItem[] = returnBookList(convertedDataList);
       setRecommandBookList(bookItemLsit);
-      // console.log("새로 호출ㄴ");
     } else {
       let bookId = bookData.id;
       if (bookId === null) {
@@ -61,9 +59,6 @@ export default function AboutBook({
   // const testDataList = returnBookList(dummyRecommandDataList);
   const [recommandBookList, setRecommandBookList] = useState<BookItem[]>();
 
-  // 현재 dummyData id 없어서 isbn으로 대체해 진행
-  const [id, setId] = useState();
-
   /**
    * 모델 2로 API 호출
    */
@@ -80,7 +75,6 @@ export default function AboutBook({
   // AboutBook 컴포넌트 모든 내용 수정
 
   return (
-    // <div className="about_book">
     <div>
       {/*학교 데이터에서 제공되는 정보만 정렬함 */}
       <BookBasicInfo bookData={bookData} />

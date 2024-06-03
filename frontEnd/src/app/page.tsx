@@ -2,7 +2,7 @@
 //page
 
 import React, { useState, useEffect } from "react";
-import BookListTamplate from "../components/component/BookListTemplate";
+import BookListTemplate from "../components/component/BookListTemplate";
 import UserInputForm from "@components/component/UserInputForm";
 
 export default function Home() {

@@ -1,18 +1,25 @@
 .show_book_list {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  grid-gap: 40px;
+  grid-gap: 20px;
+}
+
+.show_book_list_container {
+  padding: 0 20rem;
+  display: flex;
+  justify-content: center;
 }
 
 .book_item {
-  margin-right: 20px;
-  /* width: 150px; */
+  margin-right: 10px;
+  margin-bottom: 20px;
   text-align: center;
   background-color: #ffffff;
-  padding: 10px;
+  padding: 5px;
   border-radius: 10px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease;
+  box-sizing: border-box;
 }
 
 .book_item img {
@@ -23,88 +30,51 @@
   margin-top: 10px;
   font-size: 16px;
   color: #333;
-  max-width: 100%;
+  /* max-width: 100%; */
 }
 
 .book_item:hover {
   transform: scale(1.05);
 }
 
-/* Responsive design */
-@media (max-width: 768px) {
-  .book-item {
-    width: 120px;
-    margin-right: 10px;
-  }
-}
-
-@media (max-width: 480px) {
-  .book-item {
-    width: 100px;
-    margin-right: 5px;
-  }
-}
-
-/* 캐러셀 임시 주석 처리함 */
-/* .book_skill_container {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-
-  height: 100%;
-  width: 100%;
-  overflow: hidden;
-
-  border: solid midnightblue 10px;
-} */
-
 /*책 이미지 정렬*/
 
-/* 433px 이하 화면에서 이미지 크기 조절 */
-@media (max-width: 501px) {
-  .show_book_list {
-    display: flex;
-    flex-direction: column;
-  }
-}
-
-@media (max-width: 891px) {
+@media (max-width: 968px) {
   .show_book_list {
     grid-template-columns: repeat(3, 1fr);
+    padding-left: 30px;
+    padding-right: 10px;
   }
 }
 
-@media (max-width: 700px) {
+@media (max-width: 721px) {
   .show_book_list {
     grid-template-columns: repeat(2, 1fr);
   }
 }
 
-/* 캐러셀 미구현  */
-/* .book_board {
-  position: relative;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  width: 100%;
+@media (max-width: 540px) {
+  .show_book_list {
+    display: flex;
+    flex-direction: column;
+  }
+  .show_book_list_container {
+    padding: 0;
+  }
+  .book_item {
+    margin: 10px;
+  }
 }
 
-.book_board img {
-  position: relative;
-  display: flex;
-  flex-direction: row;
-  width: 30px;
-  margin: 10px;
-
-  align-items: center;
-} */
-
-/* .book_skill_slide {
-  position: relative;
-  display: flex;
-  justify-content: space-between;
-  height: 100%;
-  width: 100%;
-  border: solid rgb(143, 186, 243) 10px;
-} */
+@media (max-width: 375px) {
+  .show_book_list {
+    display: flex;
+    flex-direction: column;
+    padding: 0px;
+  }
+  .show_book_list_container {
+    padding: 50px;
+  }
+  .book_item {
+  }
+}

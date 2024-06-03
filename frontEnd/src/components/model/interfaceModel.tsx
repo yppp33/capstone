@@ -90,7 +90,7 @@ export function serverBookToData(severBookList: serverBook[]): Data[] {
       description: elem.description,
       categoryName: elem.categoryName,
       subInfo: undefined,
-      cover: elem.imgPath ? elem.imgPath : "public/images/noImage.png",
+      cover: elem.imgPath ? elem.imgPath : "@public/images/noImage.png",
     };
 
     const result: Data = {
@@ -116,6 +116,10 @@ export interface serverBook {
   categoryName: string | null;
 }
 
+export interface checkformData {
+  birthdateCheck: boolean;
+  departmentCheck: boolean;
+}
 export interface inputData {
   gender: string;
   patron_type: number;

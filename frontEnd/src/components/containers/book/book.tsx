@@ -2,7 +2,8 @@
 
 import { BookItem } from "@components/model/interfaceModel";
 import styles from "@styles/book.module.css";
-import { Data } from "@components/model/interfaceModel";
+import { useDummy } from "@data/const";
+import noImage from "@public/images/noImage.png";
 
 /**
  *
@@ -17,11 +18,13 @@ export default function Book({
   bookInfo: BookItem;
   clickEvent: (bookItem: BookItem) => void;
 }) {
-  const { title, author, publisher, cover }: BookItem = bookInfo;
+  const { title, author, cover, publisher }: BookItem = bookInfo;
   //데이터 구조
 
-  const titles = title.split("-");
-  const words = author.split(",");
+  const authors = author.split(",");
+  const onErrorImg = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
+    e.currentTarget.src = noImage.src;
+  };
 
   return (
     <div
@@ -32,18 +35,24 @@ export default function Book({
       }}
     >
       <div id={styles.book_cover}>
-        <img src={cover} alt={titles[0]} />
+        <img src={cover} alt={title} onError={onErrorImg} />
       </div>
 
-      <div className="fw-bold" style={{ fontSize: "1.5rem" }}>
-        <p>{titles[0]}</p>
+      <div id={styles.title} className="fw-bold" style={{ fontSize: "1.5rem" }}>
+        <p>{title}</p>
       </div>
-      <p>{titles[1]}</p>
-      <div className="d-flex flex-row w-100">
-        <span className="pe-3">{words[0]}</span>
-        <span>{words[1]}</span>
+
+      <div>
+        <span id={styles.book_author}>
+          {authors.length > 1
+            ? `${authors[0]}외 ${authors.length - 1}명`
+            : authors[0]}
+        </span>
       </div>
-      {/* </Link> */}
+
+      <div className="mt-1" style={{ fontSize: "0.9rem", color: "		#9F9F9F" }}>
+        {publisher}
+      </div>
     </div>
   );
 }

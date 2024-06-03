@@ -4,7 +4,7 @@ import { useSearchParams } from "next/navigation";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Data, serverBook } from "@components/model/interfaceModel";
-import BookListTamplate from "@components/component/BookListTemplate";
+import BookListTemplate from "@components/component/BookListTemplate";
 import LoadingComponent from "@components/component/LoadingComponent";
 import { serverBookToData } from "@components/model/interfaceModel";
 import { Api1Url, useDummy } from "@data/const";
@@ -15,7 +15,6 @@ import { dummyData } from "@data/dummyData";
 // const local = `http://localhost:3000/bookList`;
 
 const BookList = () => {
-  const pathname = usePathname();
   const searchParams = useSearchParams();
 
   const [datalist, setData] = useState<Data[]>([]);
@@ -60,7 +59,7 @@ const BookList = () => {
   return (
     <div>
       {datalist[0] ? (
-        <BookListTamplate dataList={datalist} />
+        <BookListTemplate dataList={datalist} />
       ) : (
         <LoadingComponent />
       )}

@@ -24,14 +24,15 @@ export default function DetailNav({
 
   useEffect(() => {
     if (navIndex !== null) {
-      scrollRef.current[navIndex]?.scrollIntoView({ behavior: "smooth" });
+      scrollRef.current[navIndex]?.scrollIntoView({
+        behavior: "smooth",
+        block: "center",
+      });
 
       navRef.current.forEach((ref) => {
         if (ref.classList.contains("active")) {
           ref.classList.remove("active");
         }
-
-        console.log(ref);
       });
 
       navRef.current[navIndex].classList.add("active");
@@ -45,6 +46,7 @@ export default function DetailNav({
     const changeNavBtnStyle = () => {
       scrollRef.current.forEach((ref, idx) => {
         if (
+          ref !== null &&
           ref.offsetTop <= window.scrollY &&
           window.scrollY < ref.offsetTop + ref.clientHeight
         ) {
@@ -60,7 +62,7 @@ export default function DetailNav({
           //   console.log(navRef.current[idx]);
           //   navRef.current[idx].classList.add("active");
           // }
-          // css repaint 방지
+          // css repaint 방지ㄴ
           // setNavIndex(idx)코드 제거
           // -> 왜냐면  클릭시 useEffect가 다시 일어난다!!
         }
@@ -77,7 +79,7 @@ export default function DetailNav({
   }, [scrollRef]);
 
   return (
-    <div style={{ position: "sticky", top: HEADER_HEIGHT }}>
+    <div style={{ position: "sticky", top: HEADER_HEIGHT, zIndex: 1 }}>
       <ul id="aboutBook_tab" className="nav nav-tabs bg-white ">
         {navItemList.map((elem, idx) => (
           <li
