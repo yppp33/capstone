@@ -68,9 +68,6 @@ export function isEmptyObj(obj: Object | null) {
 
 export function serverBookToData(severBookList: serverBook[]): Data[] {
   const datalist: Data[] = severBookList.map((elem) => {
-    const imageName = elem.imgPath ? elem.imgPath : "/noImage.png";
-    const makedPath = "public/images/" + imageName.split("/").reverse()[0];
-
     const bookItem: BookItem = {
       id: elem.id ? elem.id : 0,
       title: elem.title ? elem.title : "",
@@ -83,7 +80,7 @@ export function serverBookToData(severBookList: serverBook[]): Data[] {
       description: elem.description ? elem.description : "",
       categoryName: elem.categoryName ? elem.categoryName : "",
       subInfo: undefined,
-      cover: makedPath,
+      cover: elem.imgPath ? elem.imgPath : "",
     };
 
     const result: Data = {
@@ -109,6 +106,10 @@ export interface serverBook {
   categoryName: string | null;
 }
 
+export interface checkformData {
+  birthdateCheck: boolean;
+  departmentCheck: boolean;
+}
 export interface inputData {
   gender: string;
   patron_type: number;

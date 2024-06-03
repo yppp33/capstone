@@ -12,9 +12,6 @@ const SelectOption = (props: SelectOptionProps) => {
   const { options, serverValueMap, serverCallback } = props;
   const [selectedValue, setSelectedValue] = useState<string>("");
 
-
-  
-
   return (
     <div>
       <select

@@ -18,19 +18,10 @@ export default function DetailContent({
   // scrollRef.current : []
   const scrollRef = useRef<HTMLElement[]>([]); // <- DetailReview1, DetailReview2, DetailReview3
 
-  const [test, setTest] = useState(false);
-
   const { description, categoryName } = bookData;
 
   // 4개의 객체를  담을 Ref배열
   // DOM을 건들기 위해 사용
-
-  useEffect(() => {
-    console.log("DetailContent reRendering");
-  }, [test]);
-  const onClick = () => {
-    setTest(!test);
-  };
 
   /**
    * navItem content
@@ -54,14 +45,14 @@ export default function DetailContent({
     {
       idx: 2,
       tagId: "bookRecommendations",
-      item: "책 추천 리스트",
+      item: "이 책을 좋아한다면",
       content: recommandBookList,
       onClickBook: changeBook,
     },
   ];
 
   return (
-    <div onClick={onClick}>
+    <div>
       <DetailNav navItemList={navItemList} scrollRef={scrollRef} />
       {navItemList.map((elem, idx) => (
         <DetailInfo key={idx} {...elem} ref={scrollRef} />
