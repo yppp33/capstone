@@ -46,6 +46,7 @@ export default function DetailNav({
     const changeNavBtnStyle = () => {
       scrollRef.current.forEach((ref, idx) => {
         if (
+          ref !== null &&
           ref.offsetTop <= window.scrollY &&
           window.scrollY < ref.offsetTop + ref.clientHeight
         ) {
@@ -78,7 +79,7 @@ export default function DetailNav({
   }, [scrollRef]);
 
   return (
-    <div style={{ position: "sticky", top: HEADER_HEIGHT }}>
+    <div style={{ position: "sticky", top: HEADER_HEIGHT, zIndex: 1 }}>
       <ul id="aboutBook_tab" className="nav nav-tabs bg-white ">
         {navItemList.map((elem, idx) => (
           <li
