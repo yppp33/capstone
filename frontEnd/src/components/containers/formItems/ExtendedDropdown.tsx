@@ -142,6 +142,7 @@ export default function ExtendedDropdown({
 
   return (
     <div className="item-component">
+      {check ? <p></p> : <p className="invalid-notice">{alertSetence}</p>}
       <form
         onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
           autoCompletion(e);
@@ -172,8 +173,6 @@ export default function ExtendedDropdown({
           </ul>
         </div>
       </form>
-
-      {check ? "" : <p className="invalid-notice">{alertSetence}</p>}
 
       {/* {<div>{alert ? ""}을 다시 확인해주세요 </div>} */}
     </div>

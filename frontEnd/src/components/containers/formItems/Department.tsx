@@ -111,6 +111,7 @@ const Department = ({
 
   return (
     <div className="department-component">
+      {check ? "" : <p className="invalid-notice">{alertSetence}</p>}
       <form
         onSubmit={(e: React.FormEvent<HTMLFormElement>) => autoCompletion(e)}
         className="form-floating"
@@ -139,7 +140,6 @@ const Department = ({
           </ul>
         </div>
       </form>
-      {check ? "" : <p className="invalid-notice">{alertSetence}</p>}
     </div>
   );
 };
