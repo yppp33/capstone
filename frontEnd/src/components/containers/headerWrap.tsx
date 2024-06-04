@@ -8,11 +8,9 @@
 "use client";
 import { HEADER_HEIGHT } from "@data/const";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 import React from "react";
-import { useParams } from "next/navigation";
 import { usePathname } from "next/navigation";
 
 export default function HeaderWrap({
@@ -21,14 +19,9 @@ export default function HeaderWrap({
   children: React.ReactNode;
 }) {
   const [click, setClicked] = useState(false);
-  const [reEnter, setReEnter] = useState(false);
-  const onClick = () => {
-    setClicked(!click);
-  };
 
   const pathname = usePathname();
   let pathCheck = pathname.substr(1, pathname.length) === "";
-  console.log(pathCheck);
 
   return (
     <div className="header_wrapper">
@@ -43,7 +36,7 @@ export default function HeaderWrap({
                 <></>
               ) : (
                 <>
-                  <Link className=" p-3 pr-3 nav-link" href={"/"}>
+                  <Link className="nav-link link-active-custom" href={"/"}>
                     정보 재입력하기
                   </Link>
                 </>
@@ -57,6 +50,7 @@ export default function HeaderWrap({
         </div>
       </nav>
       <div
+        id="main-content-area"
         className="main_content_area"
         style={{
           paddingTop: `${HEADER_HEIGHT}`,

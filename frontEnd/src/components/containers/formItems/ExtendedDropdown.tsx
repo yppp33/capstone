@@ -4,10 +4,6 @@ import { useEffect, useState } from "react";
 import { initYear } from "@data/const";
 import { checkformData } from "@components/model/interfaceModel";
 
-interface itemProps {
-  onChange: (value: number) => void;
-}
-
 // 1. 년도 드롭다운 ~ 1950 ~ 2005까지  55년치
 // 년도 배열 string 배열로 해서 부모 컴포넌트에서 전달할때 number로 바꾸자
 // input 태그 처음 눌렀을시 처음은 모든 항목을 보여준다.
@@ -29,8 +25,8 @@ export default function ExtendedDropdown({
   onChange: (value: number) => void;
   checkComponent: checkformData;
 }) {
-  const [inputValue, setInputValue] = useState<string>(initYear);
-  const [matchedItems, setMatchedItems] = useState<string[]>([]);
+  const [inputValue, setInputValue] = useState<string>("");
+  const [matchedItems, setmatchedItems] = useState<string[]>([]);
   const [check, setCheck] = useState<boolean>(true);
   const [alertSetence, setAlertSentence] = useState("");
 
@@ -42,6 +38,18 @@ export default function ExtendedDropdown({
     alertSetence === "" ? setAlertSentence("연도를 다시 확인해주세요!") : "";
   }, [birthdateCheck]);
 
+  const alertChecktoValidValue = () => {
+    const input = document.querySelector("input");
+    if (!check) {
+      input?.classList.add("invalid");
+    } else {
+      if (input?.classList.contains("invalid"))
+        input?.classList.remove("invalid");
+    }
+  };
+
+  useEffect(alertChecktoValidValue, [check]);
+
   // 부모컴포넌트에서 전달하는 bool값에 변화가 생길때마다 check값을 바꾸낟.
 
   /**
@@ -50,10 +58,37 @@ export default function ExtendedDropdown({
    * @param selecteditem inputvalue,  input값에 렌더링될 값이다.
    */
   const submitValueToParentComponent = (selecteditem: string) => {
-    // setInputValue(selecteditem);
-    // setMatchedItems([]);
     const yearItem = parseInt(selecteditem);
     onChange(yearItem);
+  };
+
+  /**엔터시 자동완성되는 함수이다. */
+  const autoCompletion = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    //  하나밖에 없을 시 자동완성
+    if (matchedItems.length == 1) {
+      let matchedYear = matchedItems[0];
+      handleitemClick(matchedYear);
+      return;
+    }
+  };
+
+  //디바운싱
+  const useDebounce = (value: string, delay: number) => {
+    const [debouncedValue, setDebouncedValue] = useState(value);
+
+    useEffect(() => {
+      const timer = setTimeout(() => {
+        setDebouncedValue(value);
+      }, delay);
+
+      return () => {
+        clearTimeout(timer);
+      }; //value 변경 시점에 clearTimeout을 해줘야함.
+    }, [value]);
+
+    return debouncedValue;
   };
 
   /**
@@ -67,18 +102,15 @@ export default function ExtendedDropdown({
     const value = e.target.value;
     setInputValue(value);
     // 렌더링 되는 값 변경
-
     // inputValue 비동기적으로 검사하기 때문에 e.target.value로 진행
-
-    // checkRightInputValue(value);
 
     //후보 list 세팅
     const nowYearsArray = yearsArray.filter((year) => year.includes(value));
-    setMatchedItems(nowYearsArray);
+    setmatchedItems(nowYearsArray);
 
     // 입력한 값이 후보 list 항목 안에 존재한다면
     if (matchedItems.includes(value)) {
-      setCheck(true);
+      handleitemClick(value);
     } else {
       setCheck(false);
     }
@@ -92,7 +124,7 @@ export default function ExtendedDropdown({
     setInputValue(item);
     // 자동완성
     setCheck(true);
-    setMatchedItems([]);
+    setmatchedItems([]);
     submitValueToParentComponent(item);
   };
 
@@ -112,7 +144,7 @@ export default function ExtendedDropdown({
     <div className="item-component">
       <form
         onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
-          e.preventDefault();
+          autoCompletion(e);
         }}
         className="form-floating"
       >
@@ -141,7 +173,7 @@ export default function ExtendedDropdown({
         </div>
       </form>
 
-      {check ? "" : alertSetence}
+      {check ? "" : <p className="invalid-notice">{alertSetence}</p>}
 
       {/* {<div>{alert ? ""}을 다시 확인해주세요 </div>} */}
     </div>

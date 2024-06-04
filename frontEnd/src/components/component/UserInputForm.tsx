@@ -9,11 +9,10 @@ import {
   endYear,
 } from "@components/containers/formItems/ExtendedDropdown";
 import { initYear } from "@data/const";
-
 import ExtendedDropdown from "@components/containers/formItems/ExtendedDropdown";
 import { checkformData } from "@components/model/interfaceModel";
+import { departments } from "@data/patron";
 
-const INIT_YEAR = parseInt(initYear);
 const EMPTY_STRING = "";
 const DEFAULT_GENDER = "F";
 const DEFAULT_PATORN_ID = 1;
@@ -48,7 +47,7 @@ function setInputForm(key: keyof typeof testDataObj) {
     SET: {
       gender: DEFAULT_GENDER,
       patron_type: DEFAULT_PATORN_ID,
-      birthdate: INIT_YEAR,
+      birthdate: 0,
       department: EMPTY_STRING,
     },
   };
@@ -97,13 +96,15 @@ const UserInputForm = () => {
     // 조건에 맞는지 체크한다.
     const checkAlltheInput = (formData: inputData) => {
       const { gender, patron_type, birthdate, department } = formData;
-
       return (
         gender !== EMPTY_STRING &&
         startYear <= birthdate &&
         birthdate <= endYear &&
-        department !== EMPTY_STRING
+        department !== EMPTY_STRING &&
+        departments.includes(department)
       );
+
+      // 유효성 검사 로직
     };
 
     const submitcheckValueToChildComponent = (
@@ -116,6 +117,16 @@ const UserInputForm = () => {
       }));
     };
 
+    const btn = document.getElementById("btn");
+
+    // 둘 다 적절하고 && 공백이 아니라면
+    /**
+     * // birthdate만 부적절하다면, (공백포함+ 조건 만족 X)
+    // deparntment만 부적절하다면, (공백포함+ 조건 만족 X)
+     * 
+     */
+
+    // 공백이 아니고 올바른 조건이라면
     if (isFormComplete && checkAlltheInput(formData)) {
       // 전부 작성했다면 bookList 경로 이동 쿼리문과 함께
       const queryString = returnQueryString(formData);
@@ -126,12 +137,24 @@ const UserInputForm = () => {
     if (!(startYear <= formData.birthdate && formData.birthdate <= endYear)) {
       submitcheckValueToChildComponent("birthdateCheck", false);
     }
-    if (formData.department === EMPTY_STRING) {
-      // console.log("소속을 다시 확인해주세요.");
+    if (
+      formData.department === EMPTY_STRING ||
+      !departments.includes(formData.department)
+    ) {
       submitcheckValueToChildComponent("departmentCheck", false);
-      // alert("소속을 다시 확인해주세요.");
     }
-    // 작성되지 않은 항목이 있을때
+
+    // // 공백이 아니고 올바른 조건이라면
+    // if (isFormComplete && checkAlltheInput(formData)) {
+    //   // 전부 작성했다면 bookList 경로 이동 쿼리문과 함께
+
+    //   const queryString = returnQueryString(formData);
+    //   router.push(routeUrl + "?" + queryString);
+    //   return;
+    // } else {
+    //   submitcheckValueToChildComponent("departmentCheck", false);
+    //   submitcheckValueToChildComponent("birthdateCheck", false);
+    // }
   };
 
   const handleInputChange = (fieldName: string, value: string | number) => {
@@ -142,29 +165,33 @@ const UserInputForm = () => {
   };
 
   return (
-    <div className="select-template">
-      <GenderForm onChange={(value) => handleInputChange("gender", value)} />
-      <PatronTypeSelector
-        onChange={(value) => handleInputChange("patron_type", value)}
-      />
+    <>
+      <div className="select-template">
+        <GenderForm onChange={(value) => handleInputChange("gender", value)} />
+        <PatronTypeSelector
+          onChange={(value) => handleInputChange("patron_type", value)}
+        />
 
-      <ExtendedDropdown
-        onChange={(value) => handleInputChange("birthdate", value)}
-        checkComponent={checkComponent}
-      />
+        <ExtendedDropdown
+          onChange={(value) => handleInputChange("birthdate", value)}
+          checkComponent={checkComponent}
+        />
 
-      <Department
-        onChange={(value) => handleInputChange("department", value)}
-      />
+        <Department
+          onChange={(value) => handleInputChange("department", value)}
+          checkComponent={checkComponent}
+        />
 
-      <button
-        type="button"
-        className="btn btn-primary"
-        onClick={checkSubmitCondition}
-      >
-        제출
-      </button>
-    </div>
+        <button
+          type="button"
+          id="btn"
+          className="button btnPush btnLightBlue"
+          onClick={checkSubmitCondition}
+        >
+          제출
+        </button>
+      </div>
+    </>
   );
 };
 

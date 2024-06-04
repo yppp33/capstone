@@ -1,18 +1,46 @@
 // Department.tsx
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { departments } from "@data/patron";
-import SelectOption from "./SelectOption";
-import { after } from "node:test";
+import { checkformData } from "@components/model/interfaceModel";
 
-interface DepartmentProps {
+const Department = ({
+  onChange,
+  checkComponent,
+}: {
   onChange: (value: string) => void;
-}
-
-const Department = ({ onChange }: DepartmentProps) => {
+  checkComponent: checkformData;
+}) => {
   const [inputValue, setInputValue] = useState<string>("");
   const [matchedDepartments, setMatchedDepartments] = useState<string[]>([]);
+  const [check, setCheck] = useState<boolean>(true);
+  const [alertSetence, setAlertSentence] = useState("");
+
+  const { departmentCheck } = checkComponent;
+
+  useEffect(() => {
+    setCheck(departmentCheck);
+    console.log("부모컴포넌트에서의 전달값이 변경");
+    alertSetence === "" ? setAlertSentence("전공을 다시 확인해주세요") : "";
+  }, [departmentCheck]);
+
+  const alertChecktoValidValue = () => {
+    // console.log(check);
+    const input = document.getElementById("floatingInputValue-2");
+
+    if (!check) {
+      input?.classList.add("invalid");
+
+      console.log(input?.classList.contains("invalid"));
+    } else {
+      if (input?.classList.contains("invalid"))
+        input?.classList.remove("invalid");
+    }
+  };
+
+  useEffect(alertChecktoValidValue, [check]);
 
   const afterEnter = (selectedDepartment: string) => {
+    setCheck(true);
     setInputValue(selectedDepartment);
     // input란에 선택한 departement로
 
@@ -24,20 +52,21 @@ const Department = ({ onChange }: DepartmentProps) => {
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
+    const value = e.target.value.toUpperCase();
+    const valueToShow = e.target.value;
 
     // 자동완성 눌렀을시
     if (departments.includes(value)) {
       afterEnter(value);
       return;
+    } else {
+      setCheck(false);
     }
 
-    setInputValue(value);
+    setInputValue(valueToShow);
     const matched = departments.filter((department) =>
       department.includes(value)
     );
-    // string.prototype.includes(value)
-
     setMatchedDepartments(matched);
   };
 
@@ -89,7 +118,7 @@ const Department = ({ onChange }: DepartmentProps) => {
         <input
           type="text"
           className="form-control"
-          id="floatingInputValue"
+          id="floatingInputValue-2"
           value={inputValue}
           onChange={handleInputChange}
         />
@@ -110,6 +139,7 @@ const Department = ({ onChange }: DepartmentProps) => {
           </ul>
         </div>
       </form>
+      {check ? "" : <p className="invalid-notice">{alertSetence}</p>}
     </div>
   );
 };
