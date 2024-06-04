@@ -14,14 +14,8 @@ export default function DetailContent({
   recommandBookList: BookItem[];
   changeBook: (bookItem: BookItem) => void;
 }) {
-  // const scrollRef = useRef<HTMLElement[]>([]);
-  // scrollRef.current : []
-  const scrollRef = useRef<HTMLElement[]>([]); // <- DetailReview1, DetailReview2, DetailReview3
-
   const { description, categoryName } = bookData;
-
-  // 4개의 객체를  담을 Ref배열
-  // DOM을 건들기 위해 사용
+  const scrollRef = useRef<HTMLElement[]>([]); // <- DetailReview1, DetailReview2, DetailReview3
 
   /**
    * navItem content
@@ -54,6 +48,7 @@ export default function DetailContent({
   return (
     <div>
       <DetailNav navItemList={navItemList} scrollRef={scrollRef} />
+
       {navItemList.map((elem, idx) => (
         <DetailInfo key={idx} {...elem} ref={scrollRef} />
       ))}

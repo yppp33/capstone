@@ -20,7 +20,7 @@ const DetailInfo = forwardRef(
             ref.current[idx] = currentRef;
           }
         }}
-        id={tagId}
+        id={idx.toString()}
         className={styles.detail_section}
       >
         <div className={styles.detail_info_content}>

@@ -21,14 +21,9 @@ export default function HeaderWrap({
   children: React.ReactNode;
 }) {
   const [click, setClicked] = useState(false);
-  const [reEnter, setReEnter] = useState(false);
-  const onClick = () => {
-    setClicked(!click);
-  };
 
   const pathname = usePathname();
   let pathCheck = pathname.substr(1, pathname.length) === "";
-  console.log(pathCheck);
 
   return (
     <div className="header_wrapper">
@@ -57,6 +52,7 @@ export default function HeaderWrap({
         </div>
       </nav>
       <div
+        id="main-content-area"
         className="main_content_area"
         style={{
           paddingTop: `${HEADER_HEIGHT}`,

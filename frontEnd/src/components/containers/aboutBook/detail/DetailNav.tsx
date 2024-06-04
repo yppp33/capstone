@@ -1,7 +1,6 @@
 "use client";
 
 import { navItemType } from "@components/model/interfaceModel";
-import { type } from "os";
 import { useState } from "react";
 import { useRef, useEffect } from "react";
 import { HEADER_HEIGHT } from "@data/const";
@@ -14,13 +13,9 @@ export default function DetailNav({
   navItemList: navItemType[];
 }) {
   const [navIndex, setNavIndex] = useState<null | number>(null);
+  const [activeIndex, setActiveIndex] = useState<null | number>(null);
 
   const navRef = useRef<HTMLElement[]>([]);
-
-  /**
-   * click 시
-   * navIndex가 navItemList의 인덱스로 설정된다.
-   */
 
   useEffect(() => {
     if (navIndex !== null) {
@@ -37,49 +32,65 @@ export default function DetailNav({
 
       navRef.current[navIndex].classList.add("active");
     }
-
-    //초기화
   }, [navIndex]);
 
-  // 현재 스크롤 위치에 따라 NavBar 버튼 스타일이 바뀌도록 클래스명을 지정한다.
   useEffect(() => {
-    const changeNavBtnStyle = () => {
-      scrollRef.current.forEach((ref, idx) => {
-        if (
-          ref !== null &&
-          ref.offsetTop <= window.scrollY &&
-          window.scrollY < ref.offsetTop + ref.clientHeight
-        ) {
-          navRef.current.forEach((ref) => {
-            if (ref.classList.contains("active")) {
-              ref.classList.remove("active");
-            }
-          });
-
-          // setNavIndex(idx);
-
-          // if (!navRef.current[idx].classList.contains("active")) {
-          //   console.log(navRef.current[idx]);
-          //   navRef.current[idx].classList.add("active");
-          // }
-          // css repaint 방지ㄴ
-          // setNavIndex(idx)코드 제거
-          // -> 왜냐면  클릭시 useEffect가 다시 일어난다!!
-        }
-      });
+    const option = {
+      threshold: 0,
+      rootMargin: `-${window.innerHeight / 2 - 1}px 0px`,
     };
 
-    window.addEventListener("scroll", changeNavBtnStyle);
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const elem = entry.target as HTMLElement;
+          const index = scrollRef.current.indexOf(elem);
+          setActiveIndex(index);
+          console.log(index);
+        }
+      });
+    }, option);
+
+    if (scrollRef.current.length > 0) {
+      scrollRef.current.forEach((elem) => observer.observe(elem));
+    }
 
     return () => {
-      // 왜 해제하지?
-      // 해제되는 시점을 모르겠다.
-      window.removeEventListener("scroll", changeNavBtnStyle);
+      if (scrollRef.current.length > 0) {
+        scrollRef.current.forEach((elem) => {
+          if (elem !== null) {
+            observer.unobserve(elem);
+          }
+        });
+      }
     };
   }, [scrollRef]);
 
+  useEffect(() => {
+    if (activeIndex !== null) {
+      navRef.current.forEach((ref) => {
+        if (ref.classList.contains("active")) {
+          ref.classList.remove("active");
+        }
+      });
+
+      navRef.current[activeIndex].classList.add("active");
+    }
+  }, [activeIndex]);
+
+  // useEffect(() => {
+  //   if (window.innerWidth <= 389) {
+  //     console.log("hui");
+  //     document.getElementById("aboutBook_tab")?.classList.add("nav-pills");
+  //   } else {
+  //     document.getElementById("aboutBook_tab")?.classList.remove("nav-pills");
+  //     document
+  //       .getElementById("aboutBook_tab")
+  //       ?.classList.remove("nav-justified");
+  //   }
+  // });
   return (
-    <div style={{ position: "sticky", top: HEADER_HEIGHT, zIndex: 1 }}>
+    <nav style={{ position: "sticky", top: HEADER_HEIGHT, zIndex: 1 }}>
       <ul id="aboutBook_tab" className="nav nav-tabs bg-white ">
         {navItemList.map((elem, idx) => (
           <li
@@ -103,6 +114,6 @@ export default function DetailNav({
           </li>
         ))}
       </ul>
-    </div>
+    </nav>
   );
 }

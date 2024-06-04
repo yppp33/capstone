@@ -32,10 +32,10 @@ export default function ShowBooks({ dataList }: { dataList: Data[] }) {
 
   //selectedBook의 값이 바뀌어 재렌더링시 실행될 콜백함수
   //Tests
-  useEffect(() => {
-    console.log(selectedBook);
-    console.log("selectBook값 변동");
-  }, [selectedBook]);
+  // useEffect(() => {
+  //   console.log(selectedBook);
+  //   console.log("selectBook값 변동");
+  // }, [selectedBook]);
 
   return (
     <>
