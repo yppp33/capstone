@@ -1,4 +1,4 @@
-export const HEADER_HEIGHT = "50px";
+export const HEADER_HEIGHT = "56px";
 export const initYear = "2000";
 export const useDummy = true;
 export const Api1Url = `http://localhost:8080/books/recommend`; // 책추전

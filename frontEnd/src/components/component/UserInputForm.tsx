@@ -185,7 +185,7 @@ const UserInputForm = () => {
         <button
           type="button"
           id="btn"
-          className="btn btn-primary"
+          className="button btnPush btnLightBlue"
           onClick={checkSubmitCondition}
         >
           제출

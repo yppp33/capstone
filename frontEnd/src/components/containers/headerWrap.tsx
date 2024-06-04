@@ -8,11 +8,9 @@
 "use client";
 import { HEADER_HEIGHT } from "@data/const";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 import React from "react";
-import { useParams } from "next/navigation";
 import { usePathname } from "next/navigation";
 
 export default function HeaderWrap({
@@ -38,7 +36,7 @@ export default function HeaderWrap({
                 <></>
               ) : (
                 <>
-                  <Link className=" p-3 pr-3 nav-link" href={"/"}>
+                  <Link className="nav-link link-active-custom" href={"/"}>
                     정보 재입력하기
                   </Link>
                 </>
