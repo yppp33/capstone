@@ -114,6 +114,10 @@ img {
   flex-direction: column;
 }
 
+.department-component {
+  min-height: 300px;
+}
+
 .department {
   height: 40%;
 }
