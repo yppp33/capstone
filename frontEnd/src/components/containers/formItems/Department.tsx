@@ -123,7 +123,7 @@ const Department = ({
           value={inputValue}
           onChange={handleInputChange}
         />
-        <label htmlFor="floatingInputValue">소속을 입력하세요</label>
+        <label htmlFor="floatingInputValue">전공을 입력하세요</label>
 
         {/* 예시항목  list-group-container */}
         <div className={`list-group-container`}>
