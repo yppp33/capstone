@@ -1,8 +1,6 @@
 // 학과 리스트
 export const departments = [
   "경영학과",
-  "계절학기",
-  "국제여름학교",
   "실용음악학과",
   "생활무용예술학과",
   "생활스포츠학부",
@@ -118,6 +116,41 @@ export const departments = [
   "교통공학과",
   "금속재료공학과",
 ];
+
+export const patronType2departments = [
+  "건축설계학과",
+  "건축시스템공학과",
+  "건설환경시스템공학과",
+  "교통·물류공학과",
+  "전자공학과",
+  "재료화학공학과",
+  "기계설계공학과",
+  "산업경영공학과",
+  "바이오나노학과",
+  "메카트로닉스공학과",
+  "첨단소재공학과",
+  "융합로봇시스템학과",
+  "스마트시티공학과",
+  "HYU-KITECH 공동학과",
+  "건축학과",
+  "산업화학공학과",
+  "제조인공지능학과",
+  "문화콘텐츠학과",
+  "회계세무학과",
+  "경영학과",
+  "부동산학과",
+  "동양문화학과",
+  "스포츠경영학과",
+  "실용무용학과",
+  "미술치료학과",
+  "융합디자인학과",
+  "재즈연주학과",
+];
+
+// 필터링된 새로운 배열 생성
+export const patronType1departments = departments.filter(
+  (department) => !patronType2departments.includes(department)
+);
 
 export const uniqueList = [
   "기업경영대학원",

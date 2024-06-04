@@ -111,6 +111,7 @@ const Department = ({
 
   return (
     <div className="department-component">
+      {check ? "" : <p className="invalid-notice">{alertSetence}</p>}
       <form
         onSubmit={(e: React.FormEvent<HTMLFormElement>) => autoCompletion(e)}
         className="form-floating"
@@ -122,7 +123,7 @@ const Department = ({
           value={inputValue}
           onChange={handleInputChange}
         />
-        <label htmlFor="floatingInputValue">소속을 입력하세요</label>
+        <label htmlFor="floatingInputValue">전공을 입력하세요</label>
 
         {/* 예시항목  list-group-container */}
         <div className={`list-group-container`}>
@@ -139,7 +140,6 @@ const Department = ({
           </ul>
         </div>
       </form>
-      {check ? "" : <p className="invalid-notice">{alertSetence}</p>}
     </div>
   );
 };

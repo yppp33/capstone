@@ -12,6 +12,7 @@ import { initYear } from "@data/const";
 import ExtendedDropdown from "@components/containers/formItems/ExtendedDropdown";
 import { checkformData } from "@components/model/interfaceModel";
 import { departments } from "@data/patron";
+import { patronType1departments, patronType2departments } from "@data/patron";
 
 const EMPTY_STRING = "";
 const DEFAULT_GENDER = "F";
@@ -70,6 +71,7 @@ const UserInputForm = () => {
   const [checkComponent, setCheckComponent] = useState<checkformData>({
     birthdateCheck: true,
     departmentCheck: true,
+    patronCheck: true,
   });
 
   // 객체 프로퍼티를 2개를 만들어 그 값을 변경한다..!
@@ -80,7 +82,14 @@ const UserInputForm = () => {
    * @returns queryString
    */
   const returnQueryString = (data: inputData) => {
-    const { gender, patron_type, birthdate, department } = data;
+    let { gender, patron_type, birthdate, department } = data;
+
+    if (patronType1departments.includes(department)) {
+      patron_type = 1;
+    }
+    if (patronType2departments.includes(department)) {
+      patron_type = 2;
+    }
 
     const queryString = `gender=${gender}&patron_type=${patron_type}&birthdate=${birthdate}&department=${department}`;
     return queryString;

@@ -109,6 +109,7 @@ export interface serverBook {
 export interface checkformData {
   birthdateCheck: boolean;
   departmentCheck: boolean;
+  patronCheck: boolean;
 }
 export interface inputData {
   gender: string;
