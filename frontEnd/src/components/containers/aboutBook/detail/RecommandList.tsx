@@ -11,7 +11,7 @@ export default function RecommandList({ props }: { props: navItemType }) {
   return (
     <div className={styles.book_list_container}>
       <div className={styles.book_list}>
-        {contentList.map((e, idx) => (
+        {/* {contentList.map((e, idx) => (
           <Book
             bookInfo={e}
             key={idx}
@@ -19,7 +19,18 @@ export default function RecommandList({ props }: { props: navItemType }) {
               onClickBook !== null ? onClickBook : (bookItem: BookItem) => {}
             }
           />
-        ))}
+        ))} */}
+        {contentList
+          .map((e, idx) => (
+            <Book
+              bookInfo={e}
+              key={idx}
+              clickEvent={
+                onClickBook !== null ? onClickBook : (bookItem: BookItem) => {}
+              }
+            />
+          ))
+          .sort(() => Math.random() - 0.5)}
       </div>
     </div>
   );

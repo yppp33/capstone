@@ -8,7 +8,7 @@ import {
   startYear,
   endYear,
 } from "@components/containers/formItems/ExtendedDropdown";
-import { initYear } from "@data/const";
+
 import ExtendedDropdown from "@components/containers/formItems/ExtendedDropdown";
 import { checkformData } from "@components/model/interfaceModel";
 import { departments } from "@data/patron";
