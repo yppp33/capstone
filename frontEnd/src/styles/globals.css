@@ -410,3 +410,23 @@ input:autofill:focus {
 .btnLightBlue.btnPush:hover {
   box-shadow: 0px 0px 0px 0px #002a78;
 }
+
+.not-found-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.not-found-content {
+  text-align: center;
+}
+
+.not-found-content h1 {
+  font-size: 48px;
+  margin-bottom: 20px;
+}
+
+.not-found-content p {
+  font-size: 18px;
+}

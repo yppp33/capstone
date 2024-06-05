@@ -2,13 +2,21 @@
 
 import React from "react";
 import styles from "@styles/loading.module.css";
+import NotFound from "@components/NotFound";
+import { notFound } from "next/navigation";
 
-const Loading: React.FC = () => {
+const Loading = ({ isData }: { isData: boolean }) => {
+  const isLoading = () => {
+    return (
+      <div className={styles.loading_container}>
+        <div className={styles.loading_spinner}></div>
+        <p className={styles.loading_text}>Loading...</p>
+      </div>
+    );
+  };
   return (
-    <div className={styles.loading_container}>
-      <div className={styles.loading_spinner}></div>
-      <p className={styles.loading_text}>Loading...</p>
-    </div>
+    // {!isData :<NotFound/>}
+    <>{isData ? isLoading() : notFound()}</>
   );
 };
 

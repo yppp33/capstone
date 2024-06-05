@@ -18,6 +18,7 @@ const BookList = () => {
   const searchParams = useSearchParams();
 
   const [datalist, setData] = useState<Data[]>([]);
+  const [isData, setIsData] = useState<boolean>(true);
 
   /**
    * 처음 렌더링될때 한번만 API 호출를 호출한다.
@@ -37,12 +38,16 @@ const BookList = () => {
     fetch(finalUrl)
       .then((response) => {
         if (!response.ok) {
-          alert("네트워크 에러");
+          alert("입력받은 정보는 대출내역이 부족합니다 :(");
+
+          setIsData(false);
           return [];
         }
         const json = response.json();
+        alert("입력받은 정보는 대출내역이 부족합니다 :(");
         console.log("api로 들어온 res json으로 변환");
         // console.log(`${json}`);
+        setIsData(false);
         return json; // JSON 데이터를 반환하는 프로미스
       })
       .then((bookData: serverBook[]) => {
@@ -52,6 +57,8 @@ const BookList = () => {
       })
       .catch((error) => {
         console.log("인터페이스 변환 실패, json로그와 함께 카톡주세요");
+        alert("입력받은 정보는 대출내역이 부족합니다 :(");
+        setIsData(false);
         console.log(error);
       });
   }, []);
@@ -61,7 +68,7 @@ const BookList = () => {
       {datalist[0] ? (
         <BookListTemplate dataList={datalist} />
       ) : (
-        <LoadingComponent />
+        <LoadingComponent isData={isData} />
       )}
     </div>
   );
